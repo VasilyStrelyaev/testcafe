@@ -383,6 +383,11 @@ gulp.task('preview-website', ['build-website'], function (cb) {
         });
 });
 
+gulp.task('test-website', ['build-website'], function (cb) {
+    spawn('htmlproofer', ['website/deploy'], { stdio: 'inherit' })
+        .on('exit', cb);
+});
+
 // Publish
 gulp.task('publish', ['test-server'], function () {
     // TODO switch publish tag once we'll be ready to release

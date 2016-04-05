@@ -11,7 +11,11 @@ matrix:
     env: GULP_TASK="test-client-travis"
   - node_js: "stable"
     env: GULP_TASK="test-functional"
+  - node_js: "stable"
+    env: GULP_TASK="test-website"
  fast_finish: true
+
+install: gem install jekyll html-proofer
 
 branches:
   except:
