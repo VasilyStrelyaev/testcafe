@@ -34,42 +34,6 @@ test('Check the page URL', async t => {
 });
 ```
 
-## Obtain a Browser Alias Within a Test
-
-Sometimes you may need to determine a browser's alias from within a test. For example, you configured a test tasks using the [testCafe.createRunner](../../using-testcafe/programming-interface/testcafe.md#createrunner) function and specified several browsers where the test should run: `runner.browsers(['safari','chrome'])`. However, the test logic should be different for different browsers. To do this, you need to detect which test instance corresponds to `safari` and which one corresponds to `chrome`.
-
-To obtain a browser's alias, create a client function that uses the [navigator.userAgent](https://www.w3schools.com/jsref/prop_nav_useragent.asp) property. This function returns the browser's user-agent header, and you can use external modules (for example, [ua-parser-js](https://github.com/faisalman/ua-parser-js)) to parse this header.
-
-The following sample demonstrates how to create a conditional test logic based on the browser. Before running this test, install *ua-parser-js* by running `npm install ua-parser-js`.
-
-```js
-import { ClientFunction } from 'testcafe';
-import uaParser from 'ua-parser-js';
-
-fixture `My fixture`
-    .page `http://example.com`;
-
-//Returns a user-agent header sent by the browser
-const getUA = ClientFunction(() => navigator.userAgent);
-
-test('My test', async t => {
-    const ua = await getUA();
-    const browserAlias =uaParser(ua).browser.name;
-
-    //Some common actions
-
-    //Conditional logic
-    if (browserAlias === 'Chrome'){
-        //Test logic for Chrome
-        console.log('The browser is Chrome');
-    }
-    else if (browserAlias === 'Safari'){
-        //Test logic for Safari
-        console.log('The browser is Safari');
-    }
-});
-```
-
 ## Complex DOM Queries
 
 Client functions can be helpful for complex DOM queries. For example, a tested page contains a table with some data, and you need to validate data from two columns only. To do this, obtain data from these columns, push them to an array and then compare the returned array with the expected one.
